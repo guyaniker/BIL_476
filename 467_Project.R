@@ -47,3 +47,37 @@ ggplot(output, aes(x = education, fill = hedef)) +
 #default
 ggplot(output, aes(x = default, fill = hedef)) +
   geom_bar
+
+#housing and loan 
+ggplot(output, aes(x = housing, fill = hedef)) +
+  geom_bar( position="fill")
+
+ggplot(output, aes(x = loan, fill = hedef)) +
+  geom_bar( position="fill")
+
+#month 
+ggplot(output, aes(x = month, fill = hedef)) +
+  geom_bar( position="fill")
+ggplot(output, aes(x = month, fill = hedef)) +
+  geom_bar( position="stack")
+
+#day 
+ggplot(output, aes(x = day, fill = hedef)) +
+  geom_bar( position="fill")
+
+
+ggplot(output, aes(x = day, fill = hedef)) +
+  geom_bar( position="fill")+
+  facet_wrap(~month)
+##subat ayi için günler
+ggplot(subset(output, month %in% "feb")) +
+  geom_bar( aes(day, fill=hedef), position = "fill")
+
+ggplot(subset(output, month %in% "oct")) +
+  geom_bar( aes(day, fill=hedef), position = "fill")
+
+ggplot(subset(output, month %in% "sep")) +
+  geom_bar( aes(day, fill=hedef), position = "fill")
+
+ggplot(subset(output, month %in% "nov")) +
+  geom_bar( aes(day, fill=hedef), position = "fill")

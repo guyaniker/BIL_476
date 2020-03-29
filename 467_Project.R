@@ -129,3 +129,16 @@ treebag<- caret::train( x = trainData[,-12], y= trainData$hedef , method="treeba
                         trControl =control)
 fitted <- predict(treebag,testData[,-12])
 caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+c4.5<- caret::train( x = trainData[,-12], y= trainData$hedef , method="J48",
+                     trControl =control)
+fitted <- predict(c4.5,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+
+
+rpart <- caret::train( x = trainData[,-12], y= trainData$hedef , method="rpart",
+                       parms = list(split = "gain"),
+                       trControl =control,tuneLength =7)
+fitted <- predict(rpart,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )

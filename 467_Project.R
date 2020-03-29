@@ -81,3 +81,15 @@ ggplot(subset(output, month %in% "sep")) +
 
 ggplot(subset(output, month %in% "nov")) +
   geom_bar( aes(day, fill=hedef), position = "fill")
+
+####veri manipulasyonu 
+
+output$previous_C <- ifelse(output$previous>0, "yes","no")
+output$campain_c <- ifelse(output$campaign == 1, "one",
+                    ifelse(output$campaign==2,"two",
+                           ifelse(output$campaign==3, "three", "more")))
+
+output$age_c <- cut(output$age , breaks = c(0,30,59,100), labels = c("genc","orta","yasli"))
+
+output <- output[, -c(1,9,13,14,15)]
+

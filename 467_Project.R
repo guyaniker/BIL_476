@@ -102,3 +102,11 @@ output$balance <- as.numeric(output$balance)
 output$duration <- as.numeric(output$duration)
 sapply(output,class)
 output[,-c(5,10)] <- as.data.frame(lapply(output[,-c(5,10)], factor))
+
+#training and testing 
+set.seed(100)
+trainRowNumbers <- createDataPartition(output$hedef, p=0.8, list=FALSE)
+trainData <- output[trainRowNumbers,]
+testData <- output[-trainRowNumbers,]
+prop.table(table(trainData$hedef))
+prop.table(table(testData$hedef))

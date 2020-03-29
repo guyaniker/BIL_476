@@ -141,4 +141,19 @@ rpart <- caret::train( x = trainData[,-12], y= trainData$hedef , method="rpart",
                        parms = list(split = "gain"),
                        trControl =control,tuneLength =7)
 fitted <- predict(rpart,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] 
+                       
+   
+
+mlp <- caret::train( hedef~., data = trainData, method="mlp",
+                     trControl =control,tuneLength =7)
+
+fitted <- predict(mlp,testData[,-12])
 caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+nnet <- caret::train( hedef~., data = trainData, method="nnet",
+                      trControl =control)
+fitted <- predict(nnet,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+

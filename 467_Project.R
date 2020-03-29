@@ -29,3 +29,21 @@ ggplot(data= output, aes(x=job,fill = hedef))+
   geom_bar(position = "fill")
 ggplot(data= bankfull, aes(x=job,fill = hedef))+
   geom_bar(position = "stack")
+
+#marital
+ggplot(output, aes(x = marital, fill = hedef)) +
+  geom_bar( position="fill")
+
+ggplot(output, aes(x = marital, fill = hedef)) +
+  geom_bar( position="stack")
+
+#education
+ggplot(output, aes(x = education, fill = hedef)) +
+  geom_bar( position="fill")
+
+ggplot(output, aes(x = education, fill = hedef)) +
+  geom_bar( position="stack")
+
+#default
+ggplot(output, aes(x = default, fill = hedef)) +
+  geom_bar

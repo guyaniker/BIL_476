@@ -156,4 +156,30 @@ nnet <- caret::train( hedef~., data = trainData, method="nnet",
 fitted <- predict(nnet,testData[,-12])
 caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
 
+svm_linear <- caret::train( hedef~., data = trainData , method="svmLinear",
+                            trControl =control)
 
+fitted <- predict(svm_linear,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+
+svm_radial <- caret::train( hedef~., data = trainData , method="svmRadial",
+                            trControl =control)
+
+
+fitted <- predict(svm_radial,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
+
+stopCluster(cl)
+
+models_compare <- resamples(list(C4.5=c4.5, RPART=rpart, 
+                                 MLP=mlp, NNET=nnet
+                                 ,SVM_linear =svm_linear,
+                                 SVM_RADIAl = svm_radial,TREEBAG = treebag))
+summary(models_compare)
+scales <- list(x=list(relation="free"), y=list(relation="free"))
+bwplot(models_compare, scales=scales)
+dotPlot(models_compare,scales=scales)
+imp <- varImp(rpart)
+plot(imp)
+rocs <- models_compare[[2]]

@@ -93,3 +93,12 @@ output$age_c <- cut(output$age , breaks = c(0,30,59,100), labels = c("genc","ort
 
 output <- output[, -c(1,9,13,14,15)]
 
+library(caret)
+names(output)[12]<- "hedef"
+str(output)
+output$balance <- scale(output$balance)
+output$duration <- scale(output$duration)
+output$balance <- as.numeric(output$balance)
+output$duration <- as.numeric(output$duration)
+sapply(output,class)
+output[,-c(5,10)] <- as.data.frame(lapply(output[,-c(5,10)], factor))

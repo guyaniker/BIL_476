@@ -110,3 +110,22 @@ trainData <- output[trainRowNumbers,]
 testData <- output[-trainRowNumbers,]
 prop.table(table(trainData$hedef))
 prop.table(table(testData$hedef))
+
+#cross-validation and sampling islemi 
+control <- trainControl(method="repeatedcv", number = 10, repeats = 10,
+                        returnResamp = "all",
+                        classProbs = TRUE, savePredictions = TRUE,
+                        summaryFunction = twoClassSummary, sampling = "down")
+
+library(doParallel)
+cl <- makeCluster(3)
+doParallel::registerDoParallel(cl)
+stopCluster(cl)
+
+
+
+hedeff<- trainData[,12]
+treebag<- caret::train( x = trainData[,-12], y= trainData$hedef , method="treebag",
+                        trControl =control)
+fitted <- predict(treebag,testData[,-12])
+caret::confusionMatrix(fitted, testData$hedef,positive = levels(as.factor(testData$hedef))[2] )
